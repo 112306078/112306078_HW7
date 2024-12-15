@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personal Profile</title>
+  <style>
+    html,body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      display: flex;
+    }
+
+    .sidebar {
+      width: 300px;
+      background-color: #333;
+      color: white;
+      padding: 20px;
+      height: 100%;
+    }
+
+    .sidebar img {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .sidebar h1 {
+      margin: 10px 0;
+    }
+
+    .main {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .section {
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 5px 10px;
+      cursor: pointer;
+      margin: 5px 0;
+    }
+
+    input {
+      padding: 5px;
+      margin: 5px 0;
+    }
+
+    .music-list {
+      display: flex;
+      flex-wrap: wrap; /* 允許換行 */
+      gap: 20px; /* 音樂項目之間的間距 */
+    }
+
+    .music-item {
+      display: flex;
+      flex-direction: column; /* 圖片在上，文字在下 */
+      align-items: center; /* 讓圖片和文字置中 */
+      text-align: center; /* 讓文字置中 */
+    }
+
+    .music-item img {
+      width: 50px;
+      margin-bottom: 5px; /* 圖片和文字之間的間距 */
+    }
+
+    a {
+      color: green;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <img src="images.jpg" alt="Profile Picture">
+    <h1 id="name">JEREMY</h1>
+    <button id="editNameBtn">edit</button>
+    <p>ABOUT ME</p>
+    <p>
+      I am a Bachelor in the Department of Management Information Systems.
+    </p>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main">
+    <h2>Education</h2>
+    <p>blablabla</p>
+    <h2>Homework List</h2>
+    <p>blablabla</p>
+    <!-- Favorite Music Section -->
+    <div class="section">
+      <h2>Favorite Music</h2>
+      <button id="addMusicBtn">add</button>
+      <div id="musicList" class="music-list"></div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // === 編輯名稱功能 ===
+    const nameElement = document.getElementById("name");
+    const editNameBtn = document.getElementById("editNameBtn");
+    let isEditing = false;
+
+    editNameBtn.addEventListener("click", () => {
+      if (isEditing) {
+        // 保存模式
+        const inputField = document.getElementById("nameInput");
+        nameElement.textContent = inputField.value || "JEREMY";
+        editNameBtn.textContent = "edit";
+      } else {
+        // 編輯模式
+        const currentName = nameElement.textContent;
+        nameElement.innerHTML = `<input type="text" id="nameInput" value="${currentName}">`;
+        editNameBtn.textContent = "save";
+      }
+      isEditing = !isEditing;
+    });
+
+    // === 新增音樂功能 ===
+    const addMusicBtn = document.getElementById("addMusicBtn");
+    const musicList = document.getElementById("musicList");
+
+    addMusicBtn.addEventListener("click", () => {
+      // 彈出輸入表單
+      const musicName = prompt("Enter music name:");
+      const musicLink = prompt("Enter music link:");
+
+      if (musicName && musicLink) {
+        // 創建新的音樂項目
+        const musicItem = document.createElement("div");
+        musicItem.classList.add("music-item");
+
+        musicItem.innerHTML = `
+          <a href="${musicLink}" target="_blank">
+            <img src="images.png" alt="Music">
+          </a>
+          <span>${musicName}</span>
+        `;
+
+        musicList.appendChild(musicItem);
+      } else {
+        alert("Please fill in both fields.");
+      }
+    });
+  </script>
+</body>
+</html>
